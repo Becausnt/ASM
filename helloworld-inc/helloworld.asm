@@ -4,8 +4,8 @@
 %include        'functions.asm'
 
 SECTION .data
-msg1 db 'Hello there!', 0xa
-msg2 db 'GENERAL KENOBI', 0xa
+msg1 db 'Hello there!', 0xa, 0
+msg2 db 'GENERAL KENOBI', 0xa, 0
 
 SECTION .text
 global _start

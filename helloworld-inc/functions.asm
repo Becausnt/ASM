@@ -30,7 +30,7 @@ print:
 
     mov     ebx, 1      ; STD_OUT
     mov     eax, 4      ; SYS_WRITE
-    int     80h         ; CALL
+    int     80h         ; call
 
     pop     ebx
     pop     ecx
@@ -42,5 +42,5 @@ print:
 ; Exit program
 quit:
     mov     eax, 1      ; SYS_EXIT
-    int     80h
+    int     80h         ; call
     ret
