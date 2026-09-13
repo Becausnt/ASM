@@ -6,14 +6,14 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
+# main code
+file="$1"
+filename=${file%".asm"}
+
 case "$file" in
     *.asm) ;;
     *) echo "Error: expected a .asm file"; exit 1 ;;
 esac
-
-# main code
-file="$1"
-filename=${file%".asm"}
 
 nasm -f elf $file
 ld -m elf_i386 "$filename.o" -o "$filename"
