@@ -1,0 +1,21 @@
+;-----------------------------------
+; Helloworld with external function includion
+
+%include        'functions.asm'
+
+SECTION .data
+msg1 db 'Hello there!', 0xa
+msg2 db 'GENERAL KENOBI', 0xa
+
+SECTION .text
+global _start
+
+_start:
+
+    mov eax, msg1
+    call print
+
+    mov eax, msg2
+    call print
+
+    call quit
