@@ -13,9 +13,9 @@ global _start
 _start:
 
     mov eax, msg1
-    call print
+    call println
 
     mov eax, msg2
-    call print
+    call println
 
     call quit
