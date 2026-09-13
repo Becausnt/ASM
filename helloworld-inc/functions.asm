@@ -30,11 +30,28 @@ print:
 
     mov     ebx, 1      ; STD_OUT
     mov     eax, 4      ; SYS_WRITE
-    int     80h         ; call
+    int     0x80        ; call
 
     pop     ebx
     pop     ecx
     pop     edx
+    ret
+
+; --------------------------------
+; void println(String string)
+; function to print with a newline
+println:
+    call print
+
+    push    eax
+
+    mov     eax, 0xa    ; newline to eax
+    push    eax         ; newline to stack
+    
+    mov     eax, esp    ; address of newline to eax
+    call    print       ; print newline
+    pop     eax         ; remove newline from stack
+    pop     eax         ; restore eax
     ret
 
 ;-------------------------------
@@ -42,5 +59,5 @@ print:
 ; Exit program
 quit:
     mov     eax, 1      ; SYS_EXIT
-    int     80h         ; call
+    int     0x80        ; call
     ret
