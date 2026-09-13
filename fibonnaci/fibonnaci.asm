@@ -28,6 +28,8 @@ next_number:
     call    print_uint      ; print number from eax
     jmp     next_number     ; loop
 
+
+; ------- CLAUDE's UINT PRINT FUNCTION ---------
 print_uint:
     mov ebx, 10
     lea edi, [numbuf + 11]
