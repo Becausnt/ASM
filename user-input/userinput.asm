@@ -17,11 +17,13 @@ _start:
     mov     eax, enter_name     ; move message address to eax
     call println                ; print
 
-    mov     edx, 64             ; num of bytes to read
+    mov     edx, 63             ; num of bytes to read, keep space for 0 terminator
     mov     ecx, name_buf       ; buffer to write to
     mov     ebx, 0              ; 0 = STDIN, 1 = STDOUT
     mov     eax, 3              ; SYS_READ
     int     0x80                ; syscall
+
+    mov     byte [name_buf + eax], 0x0  ; add null-terminator at name_buf + num of bytes read
 
     mov     eax, hello          ; move name address to eax
     call print                  ; print without newline
