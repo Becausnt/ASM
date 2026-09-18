@@ -23,6 +23,7 @@ print:
     push    ebx
     push    ecx
     push    edx
+    push    eax
     
     mov     ecx, eax    ; move string to ecx
     call    slen        ; get string length -> val in eax
@@ -35,6 +36,7 @@ print:
     pop     ebx
     pop     ecx
     pop     edx
+    pop     eax
     ret
 
 ; --------------------------------
@@ -98,10 +100,14 @@ print_loop:
 ; Print a (multi-digit) integer with a trailing newline
 println_int:
     call print_int
-    mov     eax, 0x0    ; empty string
-    push    eax         
-    mov     eax, esp    
-    call    println     ; print empty string with newline
+    push    eax
+
+    mov     eax, 0xa    ; newline to eax
+    push    eax         ; newline to stack
+    
+    mov     eax, esp    ; address of newline to eax
+    call    print       ; print newline
+    pop     eax         ; remove newline from stack
     pop     eax         ; restore eax
     ret
 
