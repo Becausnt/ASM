@@ -16,27 +16,31 @@ print_int:
     push    ecx
     push    edx
     push    esi         ; dividend
+    mov     ecx, 0      ; amount of digits to print
 
 for_digit:
+    inc     ecx         ; count digits to print
     mov     edx, 0      ; zero for results
-    mov     esi, 10     
+    mov     esi, 10     ; divide by 10
     idiv    esi         ; Divide eax by esi
-    add     eax, 48     ; convert to ascii
 
-    push    eax         ; mov to stack for printing
-    mov     eax, esp    ; move pointer to eax for printing
-    call    print
-    pop     eax         ; restore to avoid mess
-    cmp     esi, 0
+    add     edx, 48     ; convert to ascii
+    push    edx         ; mov to stack for printing
+
+    cmp     eax, 0      ; more digits to print?
     jne     for_digit
 
-    mov     eax, 0x0
-    push    eax
-    mov     eax, esp
-    call    println
-    pop     eax
+print_loop:
+    dec     ecx         ; count down to zero
+    mov     eax, esp    ; get address of digit to print
+    call    print
+    pop     eax         ; remove last digit from stack.
 
-    pop     eax
+    cmp     ecx, 0      ; any more digits to print?
+    jne     print_loop
+
+
+    pop     eax         ; restore registers and return
     pop     ecx
     pop     edx
     pop     esi
