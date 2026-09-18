@@ -55,6 +55,57 @@ println:
     ret
 
 ;-------------------------------
+; void print_int(int)
+; Print a (multi-digit) integer to stdout
+
+print_int:
+    push    eax         ; num to divide
+    push    ecx
+    push    edx
+    push    esi         ; dividend
+    mov     ecx, 0      ; amount of digits to print
+
+for_digit:
+    inc     ecx         ; count digits to print
+    mov     edx, 0      ; zero for results
+    mov     esi, 10     ; divide by 10
+    idiv    esi         ; Divide eax by esi
+
+    add     edx, 48     ; convert to ascii
+    push    edx         ; mov to stack for printing
+
+    cmp     eax, 0      ; more digits to print?
+    jne     for_digit
+
+print_loop:
+    dec     ecx         ; count down to zero
+    mov     eax, esp    ; get address of digit to print
+    call    print
+    pop     eax         ; remove last digit from stack.
+
+    cmp     ecx, 0      ; any more digits to print?
+    jne     print_loop
+
+
+    pop     eax         ; restore registers and return
+    pop     ecx
+    pop     edx
+    pop     esi
+    ret
+
+;-------------------------------
+; void println_int(int)
+; Print a (multi-digit) integer with a trailing newline
+println_int:
+    call print_int
+    mov     eax, 0x0    ; empty string
+    push    eax         
+    mov     eax, esp    
+    call    println     ; print empty string with newline
+    pop     eax         ; restore eax
+    ret
+
+;-------------------------------
 ; void exit()
 ; Exit program
 quit:
